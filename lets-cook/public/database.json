@@ -1,0 +1,4 @@
+[
+{ "id":1, "imgPath":"/img/course1.jpg", "description":"Course 1", "price": 800 },
+{ "id":2, "imgPath":"/img/course2.jpg", "description":"Course 2", "price": 500 }
+]
