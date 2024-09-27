@@ -4,6 +4,7 @@ import CourseItem from './course-item'
 type courseType = {
       imgPath: string;
       id: number;
+      title: string;
       descrition: string;
       price: number;
   }
@@ -13,7 +14,7 @@ const Courses = () => {
 
     useEffect(() => {
         getCourses()
-        console.log(courses);
+        // console.log(courses);
     }, [])
     
     const getCourses = async()=>{

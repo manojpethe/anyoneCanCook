@@ -6,6 +6,7 @@ type CourseItemProps = {
   data: {
     imgPath: string;
     id: number;
+    title: string;
     descrition: string;
     price: number;
   };
@@ -13,7 +14,7 @@ type CourseItemProps = {
 
 const CourseItem: React.FC<CourseItemProps> = ({data}) => {
   const router = useRouter()
-  console.log(JSON.stringify(data));
+  // console.log(JSON.stringify(data));
 
   const visitCourse = (id:number)=>{
     router.push("/courses/" + id)
