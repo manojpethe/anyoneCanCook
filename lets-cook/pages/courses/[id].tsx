@@ -1,14 +1,14 @@
 import React, {useState,useEffect} from 'react'
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+// import Image from 'next/image';
 
-type courseType = {
-  imgPath: string;
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-}
+// type courseType = {
+//   imgPath: string;
+//   id: number;
+//   title: string;
+//   description: string;
+//   price: number;
+// }
 
 const ShowCourse = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const ShowCourse = () => {
     fetch('/database.json')
     .then(response => response.json())
     .then(data => {
-        const selectedItem = data.find((item:any)=>{
+        data.find((item:any)=>{
           // console.log(id,item?.id);
           if(id == item?.id){
             // console.log("found it:",item);
