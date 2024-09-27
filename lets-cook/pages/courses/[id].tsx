@@ -2,18 +2,19 @@ import React, {useState,useEffect} from 'react'
 import { useRouter } from 'next/router';
 // import Image from 'next/image';
 
-// type courseType = {
-//   imgPath: string;
-//   id: number;
-//   title: string;
-//   description: string;
-//   price: number;
-// }
+type courseType = {
+  imgPath: string;
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+}
 
 const ShowCourse = () => {
   const router = useRouter();
   const [course, setCourse] = useState({ imgPath: "", id: 0, title:"", description: "", price: 0 });
   const { id } = router.query;
+
 
   useEffect(()=>{
     getCourses()
@@ -23,9 +24,11 @@ const ShowCourse = () => {
     fetch('/database.json')
     .then(response => response.json())
     .then(data => {
-        data.find((item:any)=>{
+        data.find((item:courseType)=>{
           // console.log(id,item?.id);
-          if(id == item?.id){
+          // let name1: string = person.name ?? "";
+          const tempId = id as unknown as number;
+          if(tempId == item?.id){
             // console.log("found it:",item);
             setCourse(item);
           }
@@ -44,16 +47,17 @@ const ShowCourse = () => {
         <h1 className="text-5xl mb-1">{course?.title}</h1>
       </header>
       <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-2 gap-1'>
-        <div className='flex justify-center items-center'><img src={course?.imgPath} /></div>
-        <div className='text-white '>
+        <div className='flex justify-center items-center px-4'><img src={course?.imgPath} /></div>
+        <div className='text-white px-4'>
         <div className='flex justify-center items-center text-white text-5xl px-4'>
-            ₹ {course?.price}&nbsp;
-          <button className='text-xl bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
+            ₹{course?.price}&nbsp;
+          <button className='text-sm bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
           Pay & Register
           </button>
         </div>
         <p/>
-          {course?.description}
+        <span className='font-semibold'>More Information:</span>
+        <p/>{course?.description}
 
         </div>
       </div>

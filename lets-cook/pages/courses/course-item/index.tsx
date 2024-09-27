@@ -21,8 +21,8 @@ const CourseItem: React.FC<CourseItemProps> = ({data}) => {
   }
 
   return (
-    <div key={data?.id} className="bg-black-200">
-        <div style={{height:"90%"}}>
+    <div key={data?.id} className="bg-gray-800 border-solid rounded-md border-gray-600">
+        <div style={{height:"90%", margin: "20px"}}>
             <img src={data?.imgPath} />
         </div>
         <div className='flex justify-center items-center'>
