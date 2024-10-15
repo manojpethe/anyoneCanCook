@@ -9,12 +9,13 @@ type CourseItemProps = {
     title: string;
     descrition: string;
     price: number;
-  };
+    hideButton?: boolean;
+    layout?: string;
+  }
 }
 
 const CourseItem: React.FC<CourseItemProps> = ({data}) => {
   const router = useRouter()
-  // console.log(JSON.stringify(data));
 
   const visitCourse = (id:number)=>{
     router.push("/courses/" + id)
@@ -22,14 +23,17 @@ const CourseItem: React.FC<CourseItemProps> = ({data}) => {
 
   return (
     <div key={data?.id} className="bg-gray-800 border-solid rounded-md border-gray-600">
-        <div style={{height:"90%", margin: "20px"}}>
-            <img src={data?.imgPath} />
+        <div className='m-7'>
+            <img onClick={()=>{visitCourse(data.id)}} src={data?.imgPath} />
         </div>
+        { !data.hideButton ? 
         <div className='flex justify-center items-center'>
         <button onClick={()=>{visitCourse(data.id)}} className='bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
-        Register
+        View
         </button>
         </div>
+        : "" 
+        }
     </div>
   )
 }
