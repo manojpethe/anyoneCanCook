@@ -1,5 +1,5 @@
 import Postgres from "@/db/pgdb";
-import { NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 
 type Course = {
     id: number;
@@ -23,7 +23,7 @@ const addCourse = async (course: Course, res: NextApiResponse<unknown>) => {
             description,
             price,
             imgpath,
-            date,
+            scheduledate,
             duration,
             meetinglink,
             fbgrouplink,
@@ -40,7 +40,7 @@ const addCourse = async (course: Course, res: NextApiResponse<unknown>) => {
             '${course.meetinglink}',
             '${course.fbgrouplink}',
             ${course.published},
-            ${course?.bestseller||false}
+            ${course?.bestseller || false}
         )`;
     client.query(sqlAddCourse)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -83,9 +83,24 @@ const updateCourse = async (course: Course, res: NextApiResponse<unknown>) => {
 
 }
 
-const getCourses = async (res: NextApiResponse<unknown>) => {
+const getCourses = async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
+    console.info("Request Query Object---->", req.query.type);
     const client = new Postgres();
-    const sqlGetAllPublishedCourses = `select * from courses where published = true`;
+    let sqlGetAllPublishedCourses = `select * from courses where published = true `;
+
+    switch (req.query.type) {
+        case 'upcoming':
+            sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ` and scheduledate >= CURRENT_DATE`;
+            console.info("upcoming Query",sqlGetAllPublishedCourses);
+            break;
+        case 'bestseller':
+            sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ` and bestseller = true`;
+            break;
+        case 'subscribed':
+            sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ``;
+            break;
+    }
+
     client.query(sqlGetAllPublishedCourses)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then(data => {
@@ -102,7 +117,7 @@ const getCourseById = async (id: unknown, res: NextApiResponse<unknown>) => {
     const sqlGetCourseById = `select * from courses where id = ${id}`;
     client.query(sqlGetCourseById)
         .then(data => {
-            res.status(200).json(data.rows);
+            res.status(200).json(data.rows[0]);
         })
         .catch(error => {
             res.status(503).json(error);

@@ -1,38 +1,37 @@
 import React, {useState,useEffect} from 'react'
 import { useRouter } from 'next/router';
-// import Image from 'next/image';
+import Image from 'next/image';
 
 type courseType = {
-  imgpath: string;
   id: number;
   title: string;
   description: string;
   price: number;
+  imgpath: string;
+  scheduledate: string;
+  duration: number;
+  meetinglink: string;
+  fbgrouplink: string;
+  published?: boolean;
+  bestseller?: boolean;
 }
 
 const ShowCourse = () => {
   const router = useRouter();
-  const [course, setCourse] = useState({ imgpath: "", id: 0, title:"", description: "", price: 0 });
+  const initialCourse:courseType={ imgpath: "", id: 0, title:"", description: "", price: 0, bestseller:false, published:true, duration:0,fbgrouplink:"",meetinglink:"", scheduledate:"2024-10-17" };
+  const [course, setCourse] = useState(initialCourse);
   const { id } = router.query;
 
 
   useEffect(()=>{
-    getCourses()
+    getCourses(id);
   },[id])
 
-  const getCourses = async()=>{
-    fetch('/database.json')
+  const getCourses = async(id:unknown)=>{
+    fetch(`/api/courses/${id}`)
     .then(response => response.json())
     .then(data => {
-        data.find((item:courseType)=>{
-          // console.log(id,item?.id);
-          // let name1: string = person.name ?? "";
-          const tempId = id as unknown as number;
-          if(tempId == item?.id){
-            // console.log("found it:",item);
-            setCourse(item);
-          }
-        })
+        setCourse(data);
     })
     .catch(error => {
         // Handle errors here

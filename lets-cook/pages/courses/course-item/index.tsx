@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from "next/router";
+import moment from 'moment';
 // import Link from 'next/link';
 
 
@@ -10,7 +11,7 @@ type CourseItemProps = {
     description: string;
     price: number;
     imgpath: string;
-    scheduledate: Date;
+    scheduledate: string;
     duration: number;
     meetinglink: string;
     fbgrouplink: string;
@@ -18,6 +19,7 @@ type CourseItemProps = {
     bestseller?: boolean;
     hideButton?: boolean;
     layout?: string;
+    showDate?: boolean;
   }
 }
 
@@ -32,6 +34,8 @@ const CourseItem: React.FC<CourseItemProps> = ({data}) => {
     <div key={data?.id} className="bg-gray-800 border-solid rounded-md border-gray-600 cursor-pointer">
         <div className='m-7'>
             <img onClick={()=>{visitCourse(data.id)}} src={data?.imgpath} />
+        { data.showDate ? <div className='text-center p-1 text-xl'>{moment(data?.scheduledate).format('Do MMMM')}</div> : "" }
+
         </div>
         { !data.hideButton ? 
         <div className='flex justify-center items-center'>

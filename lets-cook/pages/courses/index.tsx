@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import CourseItem from './course-item'
 
 type courseType = {
-      imgpath: string;
-      id: number;
-      title: string;
-      descrition: string;
-      price: number;
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    imgpath: string;
+    scheduledate: string;
+    duration: number;
+    meetinglink: string;
+    fbgrouplink: string;
+    published?: boolean;
+    bestseller?: boolean;
   }
 
 const Courses = () => {
@@ -18,7 +24,7 @@ const Courses = () => {
     }, [])
     
     const getCourses = async()=>{
-        fetch('/database.json')
+        fetch('/api/courses')
         .then(response => response.json())
         .then(data => {
             setCourses(data)

@@ -6,7 +6,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<unknown>,
 ) {
-  console.log("id", req.query.id);
+  // console.log("id", req.query.id);
   switch (req.method) {
     case 'GET':
       getCourseById(req.query.id || 0, res);
