@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 // import Image from 'next/image';
 
 type courseType = {
-  imgPath: string;
+  imgpath: string;
   id: number;
   title: string;
   description: string;
@@ -12,7 +12,7 @@ type courseType = {
 
 const ShowCourse = () => {
   const router = useRouter();
-  const [course, setCourse] = useState({ imgPath: "", id: 0, title:"", description: "", price: 0 });
+  const [course, setCourse] = useState({ imgpath: "", id: 0, title:"", description: "", price: 0 });
   const { id } = router.query;
 
 
@@ -47,7 +47,7 @@ const ShowCourse = () => {
         <h1 className="text-5xl mb-1">{course?.title}</h1>
       </header>
       <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-2 gap-1'>
-        <div className='flex justify-center items-center px-4'><img src={course?.imgPath} /></div>
+        <div className='flex justify-center items-center px-4'><img src={course?.imgpath} /></div>
         <div className='text-white px-4'>
         <div className='flex justify-center items-center text-white text-5xl px-4'>
             ₹{course?.price}&nbsp;

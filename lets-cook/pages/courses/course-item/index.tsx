@@ -2,13 +2,20 @@ import React from 'react'
 import { useRouter } from "next/router";
 // import Link from 'next/link';
 
+
 type CourseItemProps = {
   data: {
-    imgPath: string;
     id: number;
     title: string;
-    descrition: string;
+    description: string;
     price: number;
+    imgpath: string;
+    scheduledate: Date;
+    duration: number;
+    meetinglink: string;
+    fbgrouplink: string;
+    published?: boolean;
+    bestseller?: boolean;
     hideButton?: boolean;
     layout?: string;
   }
@@ -22,9 +29,9 @@ const CourseItem: React.FC<CourseItemProps> = ({data}) => {
   }
 
   return (
-    <div key={data?.id} className="bg-gray-800 border-solid rounded-md border-gray-600">
+    <div key={data?.id} className="bg-gray-800 border-solid rounded-md border-gray-600 cursor-pointer">
         <div className='m-7'>
-            <img onClick={()=>{visitCourse(data.id)}} src={data?.imgPath} />
+            <img onClick={()=>{visitCourse(data.id)}} src={data?.imgpath} />
         </div>
         { !data.hideButton ? 
         <div className='flex justify-center items-center'>

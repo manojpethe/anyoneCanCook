@@ -1,5 +1,6 @@
 {
   "name": "lets-cook",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.1.8",
     "@heroicons/react": "^2.1.5",
+    "lets-cook": "file:",
     "next": "14.2.13",
     "pg": "^8.13.0",
     "react": "^18",

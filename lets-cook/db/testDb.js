@@ -5,7 +5,7 @@ class Postgres {
   client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'mydb',
+    database: 'esilts',
     password: 'postgres',
     port: 5432, // Default port for PostgreSQL
   });
@@ -25,4 +25,10 @@ class Postgres {
   }
 }
 
-export default Postgres
+const main = async()=>{
+    const client = new Postgres();
+    const result = await client.query(`select * from users where email_id like '%manoj%'`);
+    console.log(result);
+}
+
+main();

@@ -1,14 +1,28 @@
-import Image from "next/image";
-import localFont from "next/font/local";
+// import Image from "next/image";
+// import localFont from "next/font/local";
 import React, { useEffect, useState } from 'react'
 import CourseItem from './courses/course-item'
 
+// type courseType = {
+//   imgpath: string;
+//   id: number;
+//   title: string;
+//   descrition: string;
+//   price: number;
+// }
+
 type courseType = {
-  imgPath: string;
-  id: number;
-  title: string;
-  descrition: string;
-  price: number;
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    imgpath: string;
+    scheduledate: Date;
+    duration: number;
+    meetinglink: string;
+    fbgrouplink: string;
+    published?: boolean;
+    bestseller?: boolean;
 }
 
 export default function Home() {

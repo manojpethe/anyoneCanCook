@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CourseItem from './course-item'
 
 type courseType = {
-      imgPath: string;
+      imgpath: string;
       id: number;
       title: string;
       descrition: string;

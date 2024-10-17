@@ -1,26 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getCourseById, updateCourse } from "./courses";
 
-type Data = {
-  name: string;
-};
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data[]>,
+  res: NextApiResponse<unknown>,
 ) {
-    console.log("id",req.query.id);
-  switch(req.method){
+  console.log("id", req.query.id);
+  switch (req.method) {
     case 'GET':
-      res.status(200).json([{ name: "John Doe" }]);
+      getCourseById(req.query.id || 0, res);
       break;
     case 'PUT':
-      res.status(201).json([{ name: "John Doe" }]);
-        break;
-    case 'PATCH':
-      res.status(200).json([{ name: "John Doe" }]);
+      updateCourse(req.body, res)
       break;
     case 'DELETE':
-        break;
+      break;
   }
 
 }
