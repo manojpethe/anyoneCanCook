@@ -1,6 +1,7 @@
-import Link from 'next/link'
+// import Link from 'next/link'
 import React from 'react'
 import PanelItem from './panel-item'
+import CourseList from './courseList'
 
 const AdminPanel = () => {
   return (
@@ -9,10 +10,11 @@ const AdminPanel = () => {
       <header className="text-center mb-8 mt-8">
         <h1 className="text-5xl mb-1 ra">Admin Console</h1>
       </header>
-      <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-6  gap-10">
-      <PanelItem data={{icon:"+",label:"Add Course", link:"/admin/addCourse"}} />
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-10">
+      <PanelItem data={{icon:"+",label:"Add Course", link:"/admin/editCourse"}} />
       <PanelItem data={{icon:"✔",label:"Approve Subscription", link:"/admin/approve"}} />
-    </div>
+      </div>
+      <CourseList />
       </div>
     </div>
   )

@@ -1,5 +1,9 @@
+'use client'
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import moment from 'moment';
+
 
 type Course = {
     id?: number;
@@ -12,13 +16,17 @@ type Course = {
     meetinglink: string;
     fbgrouplink: string;
     published: boolean;
+    bestseller:boolean;
 }
 
-const AddCourse = () => {
+const editCourse = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
     const cssLabel = 'block mb-2 text-sm font-medium text-gray-900 dark:text-white';
     const cssInput = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-
+    const searchParams = useSearchParams()
+    const id = searchParams.get('id')||0;
+    const [courseId, setCourseId] = useState(0);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
@@ -28,10 +36,36 @@ const AddCourse = () => {
     const [meetinglink, setMeetinglink] = useState("");
     const [fbgrouplink, setFbgrouplink] = useState("");
     const [published, setPublished] = useState(true);
+    const [bestseller,setBestseller] = useState(false);
 
+    useEffect(() => {
+        getCourse(id)
+    }, [id])
+    
+    const getCourse = (id:unknown)=>{
+        fetch('/api/courses/'+id)
+        .then(response => response.json())
+        .then(data => {
+            setCourseId(data?.id);
+            setTitle(data?.title);
+            setDescription(data?.description);
+            setPrice(data?.price);
+            setPrice(data?.price);
+            setImgpath(data?.imgpath);
+            setScheduledate(moment(data?.scheduledate).format("YYYY-MM-DD"));
+            setDuration(data?.duration);
+            setMeetinglink(data?.meetinglink);
+            setFbgrouplink(data?.fbgrouplink);
+            setBestseller(data?.bestseller);
+        })
+        .catch(error => {
+            console.error('Error:',error);
+        });
+    }
 
     const handleAddCourse = async()=>{
         const newCourse:Course = {
+            id:courseId,
             title,
             description,
             price,
@@ -40,13 +74,41 @@ const AddCourse = () => {
             duration,
             meetinglink,
             fbgrouplink,
-            published
+            published,
+            bestseller
         }
-        console.info(newCourse);
-        postCourse(newCourse);
+        if(!courseId){
+            saveCourse(newCourse);
+        } else {
+            updateCourse(newCourse);
+        }
     }
 
-    const postCourse =async(course:Course)=>{
+    const updateCourse =async(course:Course)=>{
+        fetch('/api/courses/'+courseId , {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json' // Set the appropriate content type
+            },
+            body: JSON.stringify(course) // Include the request body if necessary
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}`);
+            }
+            return response.json(); // Parse the response as JSON
+        })
+        .then(data => {
+            // console.log('Success:', data);
+            router.push("/admin/");
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    const saveCourse =async(course:Course)=>{
         fetch('/api/courses', {
             method: 'POST',
             headers: {
@@ -105,7 +167,18 @@ const AddCourse = () => {
                         <label htmlFor="VideoLink" className={cssLabel}>FB group Link</label>
                         <input value={fbgrouplink} onChange={(e)=>{setFbgrouplink(e.target.value)}} type="text" id="VideoLink" className={cssInput} required />
                     </div>
+                    <div className="flex items-center mb-4">
+                        <input checked={published} onChange={()=>{ setPublished(published ? false : true) }} id="published-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label htmlFor="published-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Published</label>
+                    </div>
+                    <div className="flex items-center">
+                        <input checked={bestseller} onChange={()=>{ setBestseller(bestseller ? false : true) }} id="bestseller-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label htmlFor="bestseller-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bestseller</label>
+                    </div>
+                    &nbsp;
                     <button onClick={()=>{handleAddCourse()}} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                    &nbsp;
+                    <button onClick={()=>{router.push("/admin/")}} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
                     <div className="mb-5">&nbsp;</div>
                 </form>
 
@@ -114,4 +187,8 @@ const AddCourse = () => {
     )
 }
 
-export default AddCourse
+export default editCourse
+
+function data(value: any) {
+    throw new Error('Function not implemented.');
+}

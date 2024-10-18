@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       getCourses(req,res);
       break;
     case 'POST':
-      console.log(req.body);
+      // console.log(req.body);
       addCourse(req.body,res)
       break;
   }

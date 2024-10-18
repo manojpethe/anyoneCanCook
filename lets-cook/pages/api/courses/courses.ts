@@ -46,16 +46,15 @@ const addCourse = async (course: Course, res: NextApiResponse<unknown>) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then(data => {
             res.status(200).json({ message: "success" });
+            res.end();
         })
         .catch(error => {
             res.status(503).json(error);
+            res.end();
         });;
 }
 
 const updateCourse = async (course: Course, res: NextApiResponse<unknown>) => {
-    if (course.id) {
-        res.status(404).json({ message: "Invalid id" });
-    }
     const client = new Postgres();
     const sqlUpdateCourse = `
         UPDATE courses
@@ -65,33 +64,34 @@ const updateCourse = async (course: Course, res: NextApiResponse<unknown>) => {
         price=${course.price},
         imgpath='${course.imgpath}',
         scheduledate='${course.scheduledate}',
-        duratoin='${course.duration}',
+        duration='${course.duration}',
         meetinglink='${course.meetinglink}',
         fbgrouplink='${course.fbgrouplink}',
         published=${course.published},
-        bestseller=${course.bestseller},
+        bestseller=${course.bestseller}
         WHERE id=${course.id} 
         `;
+        console.log(sqlUpdateCourse);
     client.query(sqlUpdateCourse)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then(data => {
             res.status(200).json({ message: "success" });
+            res.end();
         })
         .catch(error => {
             res.status(503).json(error);
+            res.end();
         });;
-
 }
 
 const getCourses = async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
-    console.info("Request Query Object---->", req.query.type);
+    // console.info("Request Query Object---->", req.query.type);
     const client = new Postgres();
     let sqlGetAllPublishedCourses = `select * from courses where published = true `;
 
     switch (req.query.type) {
         case 'upcoming':
             sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ` and scheduledate >= CURRENT_DATE`;
-            console.info("upcoming Query",sqlGetAllPublishedCourses);
             break;
         case 'bestseller':
             sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ` and bestseller = true`;
@@ -102,12 +102,19 @@ const getCourses = async (req: NextApiRequest, res: NextApiResponse<unknown>) =>
     }
 
     client.query(sqlGetAllPublishedCourses)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then(data => {
-            res.status(200).json(data.rows);
+            // console.log("---------------->",data.rows);
+            // res.statusCode = 200;
+            // res.json(data.rows);
+            // res.end();
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Cache-Control', 'max-age=180000');
+            res.end(JSON.stringify(data.rows));
         })
         .catch(error => {
             res.status(503).json(error);
+            res.end();
         });
 
 }
@@ -117,13 +124,13 @@ const getCourseById = async (id: unknown, res: NextApiResponse<unknown>) => {
     const sqlGetCourseById = `select * from courses where id = ${id}`;
     client.query(sqlGetCourseById)
         .then(data => {
-            res.status(200).json(data.rows[0]);
+            res.json(data.rows[0]);
+            res.status(200).end();
         })
         .catch(error => {
             res.status(503).json(error);
+            res.end();
         });
 }
-
-
 
 export { getCourses, addCourse, getCourseById, updateCourse }
