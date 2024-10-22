@@ -8,7 +8,7 @@ type courseType = {
   description: string;
   price: number;
   imgpath: string;
-  scheduledate: Date;
+  scheduledate: string;
   duration: number;
   meetinglink: string;
   fbgrouplink: string;
