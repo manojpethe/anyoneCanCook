@@ -19,7 +19,7 @@ type Course = {
 const CourseList = () => {
     const [courses, setCourses] = useState([])
     const getCourses = async()=>{
-        fetch('/api/courses')
+        fetch('/api/courses?type=all')
         .then(response => response.json())
         .then(data => {
             setCourses(data)

@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 type courseType = {
   id: number;
@@ -24,10 +24,13 @@ const ShowCourse = () => {
 
 
   useEffect(()=>{
-    getCourses(id);
+    getCourse(id);
   },[id])
 
-  const getCourses = async(id:unknown)=>{
+  const getCourse = async(id:unknown)=>{
+    if(!id){
+      return;
+    }
     fetch(`/api/courses/${id}`)
     .then(response => response.json())
     .then(data => {

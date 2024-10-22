@@ -92,9 +92,13 @@ const getCourses = async (req: NextApiRequest, res: NextApiResponse<unknown>) =>
     switch (req.query.type) {
         case 'upcoming':
             sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ` and scheduledate >= CURRENT_DATE`;
+            console.log(sqlGetAllPublishedCourses);
             break;
         case 'bestseller':
             sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ` and bestseller = true`;
+            break;
+        case 'all':
+            sqlGetAllPublishedCourses = `select * from courses`;
             break;
         case 'subscribed':
             sqlGetAllPublishedCourses = sqlGetAllPublishedCourses + ``;

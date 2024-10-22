@@ -2,12 +2,23 @@ import pg from 'pg'
 const { Client } = pg
 
 class Postgres {
+  // client = new Client({
+  //   user: 'postgres',
+  //   host: 'localhost',
+  //   database: 'mydb',
+  //   password: 'postgres',
+  //   port: 5432, // Default port for PostgreSQL
+  // });
+
   client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'mydb',
-    password: 'postgres',
+    user: 'manojpethe',
+    host: 'ep-red-truth-541163.ap-southeast-1.aws.neon.tech',
+    database: 'matrixdb',
+    password: 'hm1Pyisrkgd3',
     port: 5432, // Default port for PostgreSQL
+    ssl: {
+      require: true,
+    },
   });
 
   query = async (query) => {
