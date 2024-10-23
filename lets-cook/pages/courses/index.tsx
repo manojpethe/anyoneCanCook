@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CourseItem from '../components/course-item'
+import CourseItem from '../../components/course-item'
 
 type courseType = {
     id: number;

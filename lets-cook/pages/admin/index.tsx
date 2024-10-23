@@ -1,6 +1,6 @@
 // import Link from 'next/link'
 import React from 'react'
-import PanelItem from '../components/panel-item'
+import PanelItem from '../../components/panel-item'
 import CourseList from './courseList'
 
 const AdminPanel = () => {
