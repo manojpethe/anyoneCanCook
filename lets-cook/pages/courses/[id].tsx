@@ -49,7 +49,9 @@ const ShowCourse = () => {
         <h1 className="text-5xl mb-1">{course?.title}</h1>
       </header>
       <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-2 gap-1'>
-        <div className='flex justify-center items-center px-4'><img src={course?.imgpath} /></div>
+        <div className='flex flex-col items-center px-4'>
+          <img className='xl:h-3/4 lg:h-3/4' src={course?.imgpath} />
+        </div>
         <div className='text-white px-4'>
         <div className='flex justify-center items-center text-white text-5xl px-4'>
             ₹{course?.price}&nbsp;
@@ -59,8 +61,7 @@ const ShowCourse = () => {
         </div>
         <p/>
         <span className='font-semibold'>More Information:</span>
-        <p/>{course?.description}
-
+        <p/><pre><div className='text-wrap'>{course?.description}</div></pre>
         </div>
       </div>
       {/* <div>{JSON.stringify(course)}</div> */}

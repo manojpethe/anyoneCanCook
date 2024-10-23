@@ -155,6 +155,10 @@ const editCourse = () => {
                         <textarea value={description} onChange={(e)=>{setDescription(e.target.value)}} rows={5} id="Information" className={cssInput} placeholder="Describe the course" required />
                     </div>
                     <div className="mb-5">
+                        <label htmlFor="ImagePath" className={cssLabel}>Image Path</label>
+                        <textarea value={imgpath} onChange={(e)=>{setImgpath(e.target.value)}} rows={5} id="ImagePath" className={cssInput} placeholder="Describe the course" required />
+                    </div>
+                    <div className="mb-5">
                         <label htmlFor="Price" className={cssLabel}>Price</label>
                         <input value={price} onChange={(e)=>{setPrice(parseInt(e.target.value))}} type="text" id="Price" className={cssInput} placeholder="Rs." required />
                     </div>
