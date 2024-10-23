@@ -15,7 +15,7 @@ const PanelItem: React.FC<PanelItemProps> = ({ data }) => {
             <Link href={data?.link}>
             <span className='text-5xl'>{data?.icon}</span>
             <p />
-            {data.label}
+            {data?.label}
             </Link>
         </div>
     )
