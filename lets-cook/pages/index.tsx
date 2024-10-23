@@ -25,6 +25,10 @@ export default function Home() {
       getUpcomingCourses();
       getSubscribedCourses();
   }, [])
+
+  const passTimeStamp = ():string=>{
+    return '&timestamp='+Date.now();
+  }
   
   const getUpcomingCourses = async()=>{
       fetch('/api/courses?type=upcoming')
@@ -39,7 +43,7 @@ export default function Home() {
   }
 
   const getSubscribedCourses = async()=>{
-    fetch('/api/courses?type=subscribed')
+    fetch('/api/courses?type=subscribed'+passTimeStamp)
     .then(response => response.json())
     .then(data => {
         setSubscribedCourses(data)

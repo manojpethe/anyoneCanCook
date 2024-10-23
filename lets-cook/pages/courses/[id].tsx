@@ -55,7 +55,7 @@ const ShowCourse = () => {
         <div className='text-white px-4'>
         <div className='flex justify-center items-center text-white text-5xl px-4'>
             ₹{course?.price}&nbsp;
-          <button className='text-sm bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
+          <button onClick={()=>{router.push('/registration')}} className='text-sm bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
           Pay & Register
           </button>
         </div>
