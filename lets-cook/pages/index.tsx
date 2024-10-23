@@ -1,7 +1,7 @@
 // import Image from "next/image";
 // import localFont from "next/font/local";
 import React, { useEffect, useState } from 'react'
-import CourseItem from './courses/course-item'
+import CourseItem from './components/course-item'
 
 type courseType = {
     id: number;
