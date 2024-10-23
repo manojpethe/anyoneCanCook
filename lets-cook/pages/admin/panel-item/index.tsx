@@ -12,8 +12,8 @@ type PanelItemProps = {
 const PanelItem: React.FC<PanelItemProps> = ({ data }) => {
     return (
         <div className='text-center p-2'>
-            <Link href={data.link}>
-            <span className='text-5xl'>{data.icon}</span>
+            <Link href={data?.link}>
+            <span className='text-5xl'>{data?.icon}</span>
             <p />
             {data.label}
             </Link>

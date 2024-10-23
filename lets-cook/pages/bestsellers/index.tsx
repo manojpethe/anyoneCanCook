@@ -43,7 +43,7 @@ const BestSellers = () => {
         <h1 className="text-5xl mb-1">Bestseller courses</h1>
     </header>
     <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-6  gap-10">
-        {bestsellerCourses.map((item:courseType)=>(<CourseItem key={item.id} data={item} />))}
+        {bestsellerCourses.map((item:courseType)=>(<CourseItem key={item.id} data={{...item,hideButton:true, layout: 'sm', showDate:false} } />))}
     </div>
     
     </div>
