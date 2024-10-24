@@ -43,7 +43,7 @@ export default function Home() {
   }
 
   const getSubscribedCourses = async()=>{
-    fetch('/api/courses?type=subscribed'+passTimeStamp)
+    fetch('/api/courses?type=subscribed'+passTimeStamp())
     .then(response => response.json())
     .then(data => {
         setSubscribedCourses(data)

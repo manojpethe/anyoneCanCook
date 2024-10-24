@@ -128,6 +128,10 @@ const getCourseById = async (id: unknown, res: NextApiResponse<unknown>) => {
     const sqlGetCourseById = `select * from courses where id = ${id}`;
     client.query(sqlGetCourseById)
         .then(data => {
+            if(data.rows.length === 0){
+                res.status(404).json({message:"Course not found"});
+                res.end();
+            }
             res.json(data.rows[0]);
             res.status(200).end();
         })
