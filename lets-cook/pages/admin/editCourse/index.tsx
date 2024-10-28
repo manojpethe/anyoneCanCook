@@ -53,7 +53,6 @@ const editCourse = () => {
             setTitle(data?.title);
             setDescription(data?.description);
             setPrice(data?.price);
-            setPrice(data?.price);
             setImgpath(data?.imgpath);
             setScheduledate(moment(data?.scheduledate).format("YYYY-MM-DD"));
             setDuration(data?.duration);

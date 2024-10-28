@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async signIn({ user, account, profile, email, credentials }) {
       // This callback is triggered after a successful sign-in
       // You can perform additional actions here, like logging the sign-in

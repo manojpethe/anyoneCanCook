@@ -54,6 +54,11 @@ const ShowCourse = () => {
     });
   }
 
+  const gotoRegister=()=>{
+    // const courseDetails = {id:course.id, title:course.title, price:course.price, fbgrouplink:course.fbgrouplink};
+    router.push(`/registration?id=${course.id}`);
+  }
+
   const displayCourse = (
   <div className="py-1 xl:px-80 md:px-40 sm:px-10 xs:px-10">
   <div className="bg-gray-900">
@@ -67,7 +72,7 @@ const ShowCourse = () => {
     <div className='text-white px-4'>
     <div className='flex justify-center items-center text-white text-5xl px-4'>
         ₹{course?.price}&nbsp;
-      <button onClick={()=>{router.push('/registration')}} className='text-sm bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
+      <button onClick={()=>{gotoRegister()}} className='text-sm bg-red-500 text-white rounded-full border-2 border-white px-4 py-2 hover:bg-green-500'>
       Pay & Register
       </button>
     </div>
@@ -76,7 +81,6 @@ const ShowCourse = () => {
     <p/><pre><div className='text-wrap'>{course?.description}</div></pre>
     </div>
   </div>
-  {/* <div>{JSON.stringify(course)}</div> */}
   </div>
 </div>);
 

@@ -1,6 +1,40 @@
-import React from 'react'
+import {useEffect, useState} from 'react'
+import { useRouter } from 'next/router';
+
+interface Course {
+  id:number;
+  title:string;
+  price:number;
+  fbgrouplink:string;
+}
 
 const Registration = () => {
+  const router = useRouter();
+  const {id} = router.query;
+  const [courseId, setCourseId] = useState(0);
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState(0);
+  const [fbgrouplink, setFbgrouplink] = useState("");
+
+  const getCourse = (id:unknown)=>{
+    fetch('/api/courses/'+id)
+    .then(response => response.json())
+    .then(data => {
+        setCourseId(data?.id);
+        setTitle(data?.title);
+        setPrice(data?.price);
+        setFbgrouplink(data.fbgrouplink);
+    })
+    .catch(error => {
+        console.error('Error:',error);
+    });
+}
+
+useEffect(() => {
+  getCourse(id);
+}, [id])
+
+
   return (
 
 <div className="py-1 xl:px-80 md:px-40 sm:px-10 xs:px-10 h-fit">
@@ -14,8 +48,9 @@ const Registration = () => {
         <div>
             <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-yellow-200 dark:border-gray-700 dark:hover:bg-yellow-100">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-800">Step 1 # Pay using Gpay / PhonePe</h5>
-            <p className="font-normal text-gray-700 dark:text-gray-800">Send mentioned amount using any UPI app.</p>
-            <p className="font-normal text-gray-700 dark:text-gray-800">तुम्हाला हव्या असलेल्या कोर्स ची फी UPI app वापरुन 9823949841 ला पाठवा.</p>
+            <p className="font-normal text-gray-700 dark:text-gray-800">Send Rs. {price} amount using any UPI app.</p>
+            <div className="font-normal text-gray-700 dark:text-gray-800"><span className='text-purple-950 text-2xl' > {title} </span> ह्या कोर्स ची फी <span className='text-2xl text-green-700' > Rs.{price} </span>
+             UPI app वापरुन 9823949841 ला पाठवा.</div>
             </div>
         </div>
         <div>
@@ -28,8 +63,10 @@ const Registration = () => {
         <div>
         	<div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-yellow-200 dark:border-gray-700 dark:hover:bg-yellow-100">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-800">Step 3 # Facebook group membership</h5>
-            <p className="font-normal text-gray-700 dark:text-gray-800">All recorded courses are on Facebook group. Join the requested group using facebook.</p>
-            <p className="font-normal text-gray-700 dark:text-gray-800">सर्व recorded क्लास फेसबूक ग्रुप वर आहेत. तुम्हाला जो ग्रुप कळवण्यात येईल तो join करावा लागेल.</p>
+            <p className="font-normal text-gray-700 dark:text-gray-800">Recorded Courses are on Facebook group. 
+              <p/><span className='text-blue-700'>Please Join this group:</span> <a target='_new' href={fbgrouplink} >{fbgrouplink}</a></p>
+              &nbsp;<p/>
+            <p className="font-normal text-gray-700 dark:text-gray-800">हा recorded क्लास फेसबूक ग्रुप वर आहेत. वरील ग्रुप join करावा लागेल. joining request approve झाल्यावर कोर्स बघू शकता. request साधारण पुढील 4 तासात approve होईल.</p>
             </div>
         </div>
         <div>
