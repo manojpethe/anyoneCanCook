@@ -20,7 +20,9 @@ const Menubar=()=>{
   const { data: session, status } = useSession();
   const router = useRouter();
   
-const showUserProfile=()=>{
+  if(status === 'unauthenticated'){ signIn() };
+
+  const showUserProfile=()=>{
     router.push('/profile');
   }
 
